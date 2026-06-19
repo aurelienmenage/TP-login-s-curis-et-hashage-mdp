@@ -1,15 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TP_LOGIN_PHP</title>
-</head>
-<body>
 
+<?php
 
+$pdo = new PDO("mysql:host=localhost;dbname=auth_demo;charset=utf8", "root", "");
 
+$username = $_POST["username"];
+$password = $_POST["password"];
 
-</body>
-</html>
+$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
+$stmt = $pdo->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
+$stmt->execute([$username, $hashedPassword]);
+
+echo "Vous êtes inscrit";
+
+?>
