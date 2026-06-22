@@ -6,14 +6,14 @@
 
 
 
-require_once  "dashboard.php"; // on requiert le db pour entrer dans la base de donnée
+require_once  "config.php"; // on requiert le db pour entrer dans la base de donnée
 
 session_start();
 
 
 $username = $_POST["username"];
 $password = $_POST["password"];
-$hash = password_hash($password, PASSWORD_DEFAULT);
+
 
 $sql = "SELECT * FROM users WHERE username = :username";// on récupère les utilisateurs par leur pseudo
 $stmt = $pdo->prepare($sql);
