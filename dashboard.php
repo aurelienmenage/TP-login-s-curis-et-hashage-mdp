@@ -1,21 +1,15 @@
 
 <?php
+session_start();
 
-$host = "localhost";
-$dbname = "tp_login_php";
-$user = "root";
-$pass = "";
-
-try{
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $pass);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch(PDOException $e) {
-    die("erreur :" . $e->getMessage());
+if (!isset($_SESSION["user"])) {
+    header("location: connexion.php");
+    exit;
 }
-
-
-
 ?>
+
+<h1>Bienvenue <?= $_SESSION["user"] ?></h1>
+<a href="deconnexion.php">Déconnexion</a>
 
 
 
