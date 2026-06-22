@@ -1,4 +1,4 @@
-
+//connexion à la base de données
 <?php
 $host = "localhost";
 $dbname = "tp_login_php";
