@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {// on vérifie l'envoi du formulaire
             ":username" => $username,
             ":password" => $hashedPassword
         ]);
-        echo "Inscription réussie ! <a href='connexion.php'>Se connecter</a>";
+        echo "Inscription réussie  <a href='connexion.php'>Se connecter</a>";
         exit;
     } catch (PDOException $e) {
         
