@@ -5,7 +5,7 @@
 //sert pour la connexion  à la base mysql
 
 $pdo = new PDO(  // on créer l'objet pdo
-    "mysql:host=localhost;dbname=tp_login_php;charset=utf8",
+    "mysql:host=localhost;dbname=web;charset=utf8",
     "root",
     "",
     [
