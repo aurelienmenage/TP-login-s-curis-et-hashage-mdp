@@ -1,37 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tp_login_php</title>
+</head>
+<body>
+    
+</body>
+</html>
 
+<form method="POST" action="inscription.php">
+    <div>
+        <label for="username">Pseudo :</label>
+        <input type="text" name="username" id="pseudo" required>
+    </div>
+    <div>
+        <label for="password">mot de passe :</label>
+        <input type="password" name="password" id="password" required>
+    </div>
+    <div>
+        <button type="submit">inscription</button>
+    </div>
+
+
+</form>
 
 <?php
 
+require 'dashboard.php';
 
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-require_once "config.php";// on requiert le db pour entrer dans la bas de donnée
-session_start();
+    $username = $_POST["username"];
+    $password = $_POST["password"];
 
-if(!empyty($_POST["username"]) && !empty($_POST["password"])) {
+    
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);// hash du mdp
 
-$username = $_POST["username"];// prend la valeur envoyé par le formulaire
-$password = $_POST["password"];//idem
+    
+    $sql = "INSERT INTO users (username, password) VALUES (:username, :password)";
+    $stmt = $pdo->prepare($sql); // insertion de la base de données
 
-$hashedPassword = password_hash($password, PASSWORD_DEFAULT); //"hash"  du mot de passe
-
-$check = $pdo->prepare("SELECT id FROM users WHERE username = :username");
-$check->execute(["username" => $username]);
-
-if($check->rowCount() > 0) {
-    echo "pseudo déja utilisé";
-    exit;
+    try {
+        $stmt->execute([
+            ":username" => $username,
+            ":password" => $hashedPassword
+        ]);
+        echo "Inscription réussie !";
+    } catch (PDOException $e) {
+        echo "Erreur : pseudo déjà utilisé.";
+    }
 }
 
-$sql = "INSERT INTO users (username, password) VALUES (:username, :password)";//requête sql pour insérer une ligne dans la table
-$stmt = $pdo->prepare($sql); // et la on demande à pdo de préparer la requête
-
-if($stmt->execute(["username" => $username, "password" => $hashedPassword])) { //  condition SI il y a réussite ou échec
-    echo "Vous êtes inscrit";
-} else {
-    echo "Erreur à l'inscription";
-}
-} else {
-    echo "veuillez remplir tous les champs";
-}
 
 ?>

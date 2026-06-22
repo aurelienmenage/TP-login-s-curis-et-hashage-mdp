@@ -1,21 +1,20 @@
 
-
 <?php
 
-//sert pour la connexion  à la base mysql
+$host = "localhost";
+$dbname = "tp_login_php";
+$user = "root";
+$pass = "";
 
-session_start();
+try{
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $pass);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch(PDOException $e) {
+    die("erreur :" . $e->getMessage());
+}
 
 
-$pdo = new PDO(  // on créer l'objet pdo
-    "mysql:host=localhost;dbname=web;charset=utf8",
-    "root",
-    "",
-    [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,// en cas d'erreur sql pdo lance une exception
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC// on  retourne les résultats sous forme de tableaux associatifs
-    ]
-);
+
 ?>
 
 
